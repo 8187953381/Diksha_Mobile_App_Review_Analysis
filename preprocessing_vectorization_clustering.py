@@ -70,7 +70,6 @@ df.dropna(subset=["Review Text"],inplace=True)
 
 eng_data = df.loc[df['Reviewer Language']=='en']
 eng_df = pd.DataFrame(eng_data)
-# eng_df
 
 
 # In[6]:
@@ -82,7 +81,7 @@ eng_df.reset_index(inplace = True)
 # In[7]:
 
 
-eng_df
+
 
 
 # In[8]:
@@ -160,14 +159,12 @@ def phrase_extraction(text, grammar):
 
 
 ls = list(eng_df["Review Text"])
-print(ls)
 
 
 # In[12]:
 
 
 dic = dict(zip(eng_df["Review Text"],eng_df["Star Rating"]))
-dic
 
 
 # In[13]:
@@ -179,7 +176,6 @@ review_text_lower = {}
 for i ,j in dic.items():
     review_text_lower[i.lower()] = j
     
-review_text_lower
 
 
 # In[14]:
@@ -201,7 +197,6 @@ review_text_lower_wdoutno = {}
 for i ,j in review_text_lower.items():
     review_text_lower_wdoutno[re.sub(r'\d+', '', i)] = j
     
-review_text_lower_wdoutno
 
 
 # In[84]:
@@ -228,8 +223,7 @@ def remove_punctuation(text):
 review_text_wdout_punct = {}
 for i,j in review_text_lower.items():
     review_text_wdout_punct[remove_punctuation(i)] = j
-#     review_text_wdout_punct.append(x)
-review_text_wdout_punct   
+ 
 
 
 # In[88]:
@@ -242,10 +236,7 @@ def remove_whitespace(text):
 review_text_wdout_whitespace = {}
 for i,j in review_text_wdout_punct.items():
     review_text_wdout_whitespace[remove_whitespace(i)] = j
-#     x = 
-#     review_text_wdout_whitespace.append(x)
-    
-review_text_wdout_whitespace  
+  
 
 
 # In[89]:
@@ -279,7 +270,6 @@ for i,j in review_text_wdout_whitespace.items():
     x = remove_stopwords(i)
     y = listToString(x)
     review_text_wdout_stopwords[y] = j
-review_text_wdout_stopwords  
 
 
 # In[91]:
@@ -293,7 +283,6 @@ review_text_wdout_emojis = {}
 for i,j in review_text_wdout_stopwords.items():
     x = deEmojify(i)
     review_text_wdout_emojis[x] = j
-review_text_wdout_emojis  
 
 
 # In[92]:
@@ -316,7 +305,6 @@ for i,j in review_text_wdout_emojis.items():
     x = lemmatize_word(i)
     y = listToString(x)
     review_text_lemmas[y] = j
-review_text_lemmas  
 
 
 # In[93]:
@@ -350,7 +338,7 @@ for i,j in review_text_lemmas.items():
     if(res>=3):
         processed_review_text[i] = j
         
-processed_review_text    
+    
 
 
 # 
@@ -365,7 +353,6 @@ processed_review_text
 
 initial_df = pd.DataFrame(list(zip(processed_review_text.keys(), processed_review_text.values())), 
                columns =['Review Text', 'Star Rating']) 
-initial_df
 
 
 # In[96]:
@@ -374,7 +361,6 @@ initial_df
 final_processed_review_text = []
 for key in processed_review_text.keys():
     final_processed_review_text.append(key)
-final_processed_review_text
 
 
 # 
@@ -406,7 +392,7 @@ def vectorization_of_list(input_list):
 
 
 vectorized_frame = vectorization_of_list(final_processed_review_text)
-vectorized_frame  
+  
 
 
 # In[99]:
@@ -432,14 +418,12 @@ review_text_df = pd.DataFrame(final_processed_review_text,columns=['Review Text'
 
 
 vectorized_frame.set_index(review_text_df["Review Text"], inplace = True) 
-vectorized_frame
 
 
 # In[102]:
 
 
 vectorized_frame.to_csv ('/Users/rishabhsrivastava/Downloads/CSVS/Vectorized_processed_review_text.csv', index = False, header=True)
-vectorized_frame
 
 
 # 
@@ -680,7 +664,6 @@ elem_rate5 = clustering_rating_wise(initial_df, 5)
 
 
 g5_elem = elem_rate5['g']
-g5_elem
 
 
 # In[121]:
@@ -732,14 +715,12 @@ keyword_freq_per_cluster(g5_elem,1).to_dict()
 
 import re
 g5_most_frequent = [y for y in g5_elem if re.search('good app', y)]
-g5_most_frequent
 
 
 # In[126]:
 
 
 r5_elem = elem_rate5['r']
-r5_elem
 
 
 # In[127]:
@@ -765,14 +746,12 @@ keyword_freq_per_cluster(r5_elem,2).to_dict()
 
 import re
 r5_most_frequent = [y for y in r5_elem if re.search('india', y)]
-r5_most_frequent
 
 
 # In[130]:
 
 
 c5_elem = elem_rate5['c']
-c5_elem
 
 
 # In[131]:
@@ -798,7 +777,6 @@ keyword_freq_per_cluster(c5_elem,3).to_dict()
 
 import re
 c5_most_frequent = [y for y in c5_elem if re.search('good students', y)]
-c5_most_frequent
 
 
 # 
@@ -815,7 +793,6 @@ elem_rate4 = clustering_rating_wise(initial_df, 4)
 
 
 g4_elem = elem_rate4['g']
-g4_elem
 
 
 # In[136]:
@@ -841,14 +818,12 @@ keyword_freq_per_cluster(g4_elem,1).to_dict()
 
 import re
 g4_most_frequent = [y for y in g4_elem if re.search('good app', y)]
-g4_most_frequent
 
 
 # In[139]:
 
 
 r4_elem = elem_rate4['r']
-r4_elem
 
 
 # In[140]:
@@ -874,14 +849,12 @@ keyword_freq_per_cluster(r4_elem,2).to_dict()
 
 import re
 r4_most_frequent = [y for y in r4_elem if re.search('goodbut question answer available', y)]
-r4_most_frequent
 
 
 # In[143]:
 
 
 c4_elem = elem_rate4['c']
-c4_elem
 
 
 # In[144]:
@@ -907,7 +880,6 @@ keyword_freq_per_cluster(c4_elem,3).to_dict()
 
 import re
 c4_most_frequent = [y for y in c4_elem if re.search('teachers', y)]
-c4_most_frequent
 
 
 # 
@@ -924,7 +896,6 @@ elem_rate3 = clustering_rating_wise(initial_df, 3)
 
 
 g3_elem = elem_rate3['g']
-g3_elem
 
 
 # In[149]:
@@ -950,14 +921,12 @@ keyword_freq_per_cluster(g3_elem,1).to_dict()
 
 import re
 g3_most_frequent = [y for y in g3_elem if re.search('add class st state board maharashtra', y)]
-g3_most_frequent
 
 
 # In[152]:
 
 
 r3_elem = elem_rate3['r']
-r3_elem
 
 
 # In[153]:
@@ -983,7 +952,6 @@ keyword_freq_per_cluster(r3_elem,2).to_dict()
 
 import re
 r3_most_frequent = [y for y in r3_elem if re.search('easy learn', y)]
-r3_most_frequent
 
 
 # In[156]:
@@ -1016,7 +984,6 @@ keyword_freq_per_cluster(c3_elem,3).to_dict()
 
 import re
 c3_most_frequent = [y for y in c3_elem if re.search('nice', y)]
-c3_most_frequent
 
 
 # 
@@ -1033,7 +1000,6 @@ elem_rate2 = clustering_rating_wise(initial_df, 2)
 
 
 g2_elem = elem_rate2['g']
-g2_elem
 
 
 # In[162]:
@@ -1059,14 +1025,12 @@ keyword_freq_per_cluster(g2_elem,1).to_dict()
 
 import re
 g2_most_frequent = [y for y in g2_elem if re.search('minutes', y)]
-g2_most_frequent
 
 
 # In[165]:
 
 
 r2_elem = elem_rate2['r']
-r2_elem
 
 
 # In[166]:
@@ -1092,14 +1056,12 @@ keyword_freq_per_cluster(r2_elem,2).to_dict()
 
 import re
 r2_most_frequent = [y for y in r2_elem if re.search('tamil', y)]
-r2_most_frequent
 
 
 # In[169]:
 
 
 c2_elem = elem_rate2['c']
-c2_elem
 
 
 # In[170]:
@@ -1125,7 +1087,6 @@ keyword_freq_per_cluster(c3_elem,3).to_dict()
 
 import re
 c2_most_frequent = [y for y in c4_elem if re.search('app', y)]
-c2_most_frequent
 
 
 # 
@@ -1142,7 +1103,6 @@ elem_rate1 = clustering_rating_wise(initial_df, 1)
 
 
 g1_elem = elem_rate1['g']
-g1_elem
 
 
 # In[175]:
@@ -1168,14 +1128,12 @@ keyword_freq_per_cluster(g1_elem,1).to_dict()
 
 import re
 g1_most_frequent = [y for y in g1_elem if re.search('board', y)]
-g1_most_frequent
 
 
 # In[178]:
 
 
 r1_elem = elem_rate1['r']
-r1_elem
 
 
 # In[179]:
@@ -1201,14 +1159,12 @@ keyword_freq_per_cluster(r1_elem,2).to_dict()
 
 import re
 r1_most_frequent = [y for y in r1_elem if re.search('question', y)]
-r1_most_frequent
 
 
 # In[182]:
 
 
 c1_elem = elem_rate1['c']
-c1_elem
 
 
 # In[183]:
@@ -1234,7 +1190,6 @@ keyword_freq_per_cluster(c1_elem,3).to_dict()
 
 import re
 c1_most_frequent = [y for y in c1_elem if re.search('bad app', y)]
-c1_most_frequent
 
 
 # In[202]:
